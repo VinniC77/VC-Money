@@ -1,37 +1,35 @@
 import { ArrowCircleUp, CurrencyDollar, ArrowCircleDown } from "phosphor-react";
-import { useContext } from "react";
-import { TransactionContext } from "../../contexts/TransactionsContext";
+import { useSummary } from "../../hooks/UseSummary";
+import { priceFormatter } from "../../utils/formatter";
 import { SummaryCard, SummaryContainer } from "./styles";
 
 export function Summary() {
 
-    const { transactions } = useContext(TransactionContext)
+  const summary = useSummary();
 
-    console.log(transactions)
-
-    return (
-        <SummaryContainer>
-            <SummaryCard>
-                <header>
-                    <span>Entradas</span>
-                    <ArrowCircleUp size={32} color="#00B37E" />
-                </header>
-                <strong>R$ 17.400,00</strong>
-            </SummaryCard>
-            <SummaryCard>
-                <header>
-                    <span>Saídas</span>
-                    <ArrowCircleDown size={32} color="#F75A68" />
-                </header>
-                <strong>R$ 17.400,00</strong>
-            </SummaryCard>
-            <SummaryCard variant="green">
-                <header>
-                    <span>Total</span>
-                    <CurrencyDollar size={32} color="#FFF" />
-                </header>
-                <strong>R$ 17.400,00</strong>
-            </SummaryCard>
-        </SummaryContainer>
-    )
+  return (
+    <SummaryContainer>
+      <SummaryCard>
+        <header>
+          <span>Entradas</span>
+          <ArrowCircleUp size={32} color="#00B37E" />
+        </header>
+        <strong>{priceFormatter.format(summary.income)}</strong>
+      </SummaryCard>
+      <SummaryCard>
+        <header>
+          <span>Saídas</span>
+          <ArrowCircleDown size={32} color="#F75A68" />
+        </header>
+        <strong>{priceFormatter.format(summary.outcome)}</strong>
+      </SummaryCard>
+      <SummaryCard variant="green">
+        <header>
+          <span>Total</span>
+          <CurrencyDollar size={32} color="#FFF" />
+        </header>
+        <strong>{priceFormatter.format(summary.total)}</strong>
+      </SummaryCard>
+    </SummaryContainer>
+  );
 }
