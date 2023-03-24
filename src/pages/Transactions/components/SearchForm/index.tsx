@@ -15,7 +15,7 @@ type SearchFormInputs = z.infer<typeof searchFormSchema>
 export function SearchForm() {
 
   const fetchTransactions = useContextSelector(TransactionContext, (context) => {
-    context.fetchTransactions
+    return context.fetchTransactions
   })
 
   const { register, handleSubmit, formState: { isSubmitting } } = useForm<SearchFormInputs>({
